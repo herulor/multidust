@@ -1,0 +1,90 @@
+#!/usr/bin/perl
+#    My aterm
+#    Modded for urxvt and deprecated rgb.txt list
+#    Jan 08, 2012 Víctor H. Cervantes <herulor@gmail.com>
+#    Copyright (C) 2005  Carlos A. Perilla J.<deepspawn@users.sourceforge.net>
+#
+#    This program is free software; you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation; either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+
+#die("Can't find colors file\n") if ! open(FILE,'</usr/lib/X11/rgb.txt');
+# # 
+
+#@LIST=<FILE>;
+#close(FILE);
+#$LENGHT=scalar(@LIST);
+#$RANDOM=int(rand()*$LENGHT)+1;
+#$_=$LIST[$RANDOM];
+#
+#while(s/\t/ /g){};
+#while(s/  / /g){};
+#s/^.* //;
+#s/\n//g;
+
+# # Arguments
+$arguments="";
+foreach $arg (@ARGV){
+    $arguments.=$arg." ";
+}
+
+# # Generate random  hex number
+sub randomHEX () {
+  $hexNum = unpack "H*", chr(rand(256));
+  return($hexNum);
+}
+
+sub randomHEXColour () {
+  my $same = TRUE;
+  my $red = "";
+  my $green = "";
+  my $blue = "";
+
+  while ($same) {
+  # Avoid the grey scale including white and black colours
+    $red   = randomHEX();
+    $green = randomHEX();
+    $blue  = randomHEX();
+
+    $same = $red eq $green;
+    $same = $same eq $blue;
+  }
+
+  $hexColour = "\\#$red$green$blue";
+
+  return($hexColour);
+}
+
+$colour = randomHEXColour();
+
+# # Title
+if ($arguments eq "") {
+#  $title = "-title \"Lautsee term $colour\"";
+  $title = "-title \"Zwartboek term $colour\"";
+} else {
+  $title = "";
+}
+
+# # Dafault fonts
+ $font = "Monaco";
+ $font = "Oxygen Mono";
+ $font = "DejaVu Sans Mono";
+ $font = "Luxi Mono";
+ $font = "Bitstream Vera Sans Mono";
+ $font = "Courier 10 Pitch";
+ $fontsize = 10;
+
+ $fontArgs = "xft:".$font.":size=".$fontsize;
+
+
+exec("urxvt -fg grey -tr -sh 65 -tint $colour $title -fn '$fontArgs' $arguments\n");
