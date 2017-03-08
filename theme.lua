@@ -26,7 +26,7 @@ function systitle(path) return systheme("/titlebar") .. path end
 
 -- {{ Main
 theme = {}
-theme.wallpaper             = hometheme("/wall.jpg")
+theme.wallpaper             = hometheme("/SF_by_Herulor.jpg")
 theme.font                  = "Monaco 8"
 theme.menu_height           = 15
 theme.menu_width            = 100

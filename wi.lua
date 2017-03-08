@@ -266,11 +266,11 @@ function (mpdicon, args)
 	elapsed = string.gsub(args["{time}"], "^(.*):.*", "%1")
 	total   = string.gsub(args["{time}"], "^(.*):", "")
 
-	if (elapsed == "" or elapsed ~= nil) then
+	if (elapsed == "" or elapsed == nil) then
 		elapsed = 0
 	end
 
-	if (total == "" or total ~= nil) then
+	if (total == "" or total == nil) then
 		total = 0
 	end
 
