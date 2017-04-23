@@ -111,30 +111,18 @@ function setWalls()
 	end
 end
 
-setWalls(wp_files)
+setWalls()
 
 -- setup the timer
-wp_timeout  = math.random(200, 1200)
+wp_timeout  = math.random(200, 600)
 wp_timer = timer { timeout = wp_timeout }
 wp_timer:connect_signal("timeout", function()
 
 	-- set wallpaper to current index
-	if beautiful.wallpaper then
-		for s = 1, screen.count() do
-			if s < 2 then
-				gears.wallpaper.fit( wp_files[wp_index1] , s)
-			else
-				gears.wallpaper.fit( wp_files[wp_index2] , s)
-			end
-		end
-	end
+	setWalls()
 
 	-- stop the timer (we don't need multiple instances running at the same time)
 	wp_timer:stop()
-
-	-- get next random index
-	wp_index1 = math.random(1, #wp_files)
-	wp_index2 = math.random(1, #wp_files)
 
 	--restart the timer
 	wp_timer.timeout = wp_timeout
